@@ -8,12 +8,8 @@
 //
 // export '/view/observer_code.dart';
 
-export 'package:fluttery_framework/view.dart';
+export 'package:fluttery_framework/view.dart' hide PageController;
 
-export '../view/main/screens/counter_code.dart';
+export '/src/app/view_app.dart';
 
-export '/view/app/my_app.dart';
-
-export '/view/main/screens/_view_screens.dart';
-
-export '/view/main/home_page.dart';
+export '/src/main/view_main.dart';

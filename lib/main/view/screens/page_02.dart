@@ -10,10 +10,5 @@ class Page2 extends CounterWidget {
 }
 
 class _Page2State extends CounterState<Page2> {
-  @override
-  void initState() {
-    prevWidget = '1';
-    nextWidget = '3';
-    super.initState();
-  }
+  _Page2State() : super(prevWidget: '1', nextWidget: '3');
 }

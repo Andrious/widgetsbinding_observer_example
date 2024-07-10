@@ -1,123 +1,105 @@
 //
-//     Superclass for the Counters
-//
+
+import '/src/controller.dart';
 
 import '/src/view.dart';
 
-abstract class CounterWidget extends StatefulWidget {
-  const CounterWidget({super.key, this.title});
-  final String? title;
+class MyApp extends AppStatefulWidget {
+  MyApp({
+    super.key,
+    this.useRouterConfig,
+  });
+
+  final bool? useRouterConfig;
+
   @override
-  State createState();
+  AppState<StatefulWidget> createAppState() => _AppState();
 }
 
-/// Supplies a counter and interface to the widgets above.
-class CounterState<T extends CounterWidget> extends StateX<T> {
+class _AppState extends AppState<MyApp> with ClassNameMixin {
   //
-  CounterState() : super(routeAware: true);
-  //
-  int _counter = 0;
+  _AppState()
+      : super(
+          title: 'Demo App',
+//          useCupertino: true,
+//          debugPaintSizeEnabled: true,
+          routes: {
+            '/': (_) => const Page1(),
+            '/page2': (_) => const Page2(),
+            '/page3': (_) => const Page3(),
+            '/page4': (_) => const Page4(),
+            '/page5': (_) => const Page5(),
+            '/page6': (_) => const Page6(),
+            '/page7': (_) => const Page7(),
+            '/page8': (_) => const Page8(),
+            '/page9': (_) => const Page9(),
+          },
+          useRouterConfig: false,
+        ) {
+    className = '_AppState';
+  }
 
-  // Subclass will assign a value
-  String? prevWidget;
-  String? nextWidget;
-
-  final buttonRow = <Widget>[];
+  @override
+  RouterConfig<Object>? onRouterConfig() => GoRouter(
+        observers: navigatorObservers,
+        routes: <RouteBase>[
+          GoRoute(
+            path: '/',
+            builder: (_, __) => const Page1(),
+          ),
+          GoRoute(
+            path: '/page2',
+            builder: (_, __) => const Page2(),
+          ),
+          GoRoute(
+            path: '/page3',
+            builder: (_, __) => const Page3(),
+          ),
+          GoRoute(
+            path: '/page4',
+            builder: (_, __) => const Page4(),
+          ),
+          GoRoute(
+            path: '/page5',
+            builder: (_, __) => const Page5(),
+          ),
+          GoRoute(
+            path: '/page6',
+            builder: (_, __) => const Page6(),
+          ),
+          GoRoute(
+            path: '/page7',
+            builder: (_, __) => const Page7(),
+          ),
+          GoRoute(
+            path: '/page8',
+            builder: (_, __) => const Page8(),
+          ),
+          GoRoute(
+            path: '/page9',
+            builder: (_, __) => const Page9(),
+          ),
+        ],
+        debugLogDiagnostics: true,
+      );
 
   @override
   void initState() {
     super.initState();
     assert(() {
       if (kDebugMode) {
-        print('###########  initState() in $this\n');
+        print('###########  initState() in $className\n');
       }
       return true;
     }());
-    if (prevWidget != null) {
-      buttonRow.add(_prevButton(prevWidget!));
-    }
-    if (nextWidget == null) {
-      buttonRow.add(const SizedBox());
-    } else {
-      buttonRow.add(_nextButton(nextWidget!));
-    }
   }
-
-  @override
-  Widget build(BuildContext context) {
-    assert(() {
-      if (kDebugMode) {
-        print('###########  build() in $this   counter: $_counter\n');
-      }
-      return true;
-    }());
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title ?? '')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 90),
-                child: Text(
-                  widget.title ?? '',
-                  style: const TextStyle(fontSize: 50),
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Text('You have pushed the button this many times:'),
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            if (buttonRow.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: buttonRow,
-                ),
-              ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() => _counter++),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget _prevButton(String title) => Flexible(
-        child: ElevatedButton(
-          key: Key(title),
-          onPressed: () async {
-            Navigator.pop(context);
-          },
-          child: Text('Page $title'),
-        ),
-      );
-
-  Widget _nextButton(String widget) => Flexible(
-        child: ElevatedButton(
-          onPressed: () async {
-            await context.push<void>('/page$nextWidget');
-          },
-          child: Text('Page $nextWidget'),
-        ),
-      );
 
   /// Whenever it removes
   @override
   void deactivate() {
     assert(() {
       if (kDebugMode) {
-        print('###########  deactivate() in $this\n');
+        print('###########  deactivate() in $className\n');
       }
       return true;
     }());
@@ -131,7 +113,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.activate();
     assert(() {
       if (kDebugMode) {
-        print('###########  activate() in $this\n');
+        print('###########  activate() in $className\n');
       }
       return true;
     }());
@@ -144,7 +126,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
   void dispose() {
     assert(() {
       if (kDebugMode) {
-        print('###########  dispose() in $this\n');
+        print('###########  dispose() in $className\n');
       }
       return true;
     }());
@@ -157,7 +139,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.didPush();
     assert(() {
       if (kDebugMode) {
-        print('###########  didPush() in $this\n');
+        print('###########  didPush() in $className\n');
       }
       return true;
     }());
@@ -169,7 +151,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.didPushNext();
     assert(() {
       if (kDebugMode) {
-        print('###########  didPushNext() in $this\n');
+        print('###########  didPushNext() in $className\n');
       }
       return true;
     }());
@@ -180,7 +162,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
   void didPop() {
     assert(() {
       if (kDebugMode) {
-        print('###########  didPop() in $this\n');
+        print('###########  didPop() in $className\n');
       }
       return true;
     }());
@@ -192,11 +174,28 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
   void didPopNext() {
     assert(() {
       if (kDebugMode) {
-        print('###########  didPopNext() in $this\n');
+        print('###########  didPopNext() in $className\n');
       }
       return true;
     }());
     super.didPopNext();
+  }
+
+  /// This method is also called immediately after [initState].
+  /// Otherwise called only if this [State] object's Widget
+  /// is a 'dependency' of [InheritedWidget].
+  /// When a InheritedWidget's build() function is called
+  /// the dependent widget's build() function is also called but not before
+  /// their didChangeDependencies() function.
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    assert(() {
+      if (kDebugMode) {
+        print('###########  didChangeDependencies() in $className\n');
+      }
+      return true;
+    }());
   }
 
   /// Called when the application's dimensions change. For example,
@@ -206,7 +205,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.didChangeMetrics();
     assert(() {
       if (kDebugMode) {
-        print('###########  didChangeMetrics() in $this\n');
+        print('###########  didChangeMetrics() in $className\n');
       }
       return true;
     }());
@@ -218,7 +217,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.didChangeTextScaleFactor();
     assert(() {
       if (kDebugMode) {
-        print('###########  didChangeTextScaleFactor() in $this\n');
+        print('###########  didChangeTextScaleFactor() in $className\n');
       }
       return true;
     }());
@@ -230,7 +229,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.didChangePlatformBrightness();
     assert(() {
       if (kDebugMode) {
-        print('###########  didChangePlatformBrightness() in $this\n');
+        print('###########  didChangePlatformBrightness() in $className\n');
       }
       return true;
     }());
@@ -242,7 +241,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.didChangeLocales(locales);
     assert(() {
       if (kDebugMode) {
-        print('###########  didChangeLocales() in $this\n');
+        print('###########  didChangeLocales() in $className\n');
       }
       return true;
     }());
@@ -251,21 +250,22 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
   /// Either be in the progress of attaching when the engine is first initializing
   /// or after the view being destroyed due to a Navigator pop.
   @override
-  void detachedLifecycleState() {
+  void detachedAppLifecycleState() {
     assert(() {
       if (kDebugMode) {
-        print('###########  detachedLifecycleState() in $this\n');
+        print('###########  detachedAppLifecycleState() in $className\n');
       }
       return true;
     }());
+    super.detachedAppLifecycleState();
   }
 
   /// The application is visible and responding to user input.
   @override
-  void resumedLifecycleState() {
+  void resumedAppLifecycleState() {
     assert(() {
       if (kDebugMode) {
-        print('###########  resumedLifecycleState() in $this\n');
+        print('###########  resumedAppLifecycleState() in $className\n');
       }
       return true;
     }());
@@ -274,10 +274,10 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
   /// The application is in an inactive state and is not receiving user input.
   /// Apps in this state should assume that they may be [pausedLifecycleState] at any time.
   @override
-  void inactiveLifecycleState() {
+  void inactiveAppLifecycleState() {
     assert(() {
       if (kDebugMode) {
-        print('###########  inactiveLifecycleState() in $this\n');
+        print('###########  inactiveAppLifecycleState() in $className\n');
       }
       return true;
     }());
@@ -288,10 +288,10 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
   /// or placed on a desktop that is no longer visible (on non-web desktop), or
   /// is running in a window or tab that is no longer visible (on the web).
   @override
-  void hiddenLifecycleState() {
+  void hiddenAppLifecycleState() {
     assert(() {
       if (kDebugMode) {
-        print('###########  hiddenLifecycleState() in $this\n');
+        print('###########  hiddenAppLifecycleState() in $className\n');
       }
       return true;
     }());
@@ -300,13 +300,14 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
   /// The application is not currently visible to the user, not responding to
   /// user input, and running in the background.
   @override
-  void pausedLifecycleState() {
+  void pausedAppLifecycleState() {
     assert(() {
       if (kDebugMode) {
-        print('###########  pausedLifecycleState() in $this\n');
+        print('###########  pausedAppLifecycleState() in $className\n');
       }
       return true;
     }());
+    super.pausedAppLifecycleState();
   }
 
   /// Called when there's a memory constraint.
@@ -315,7 +316,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.didHaveMemoryPressure();
     assert(() {
       if (kDebugMode) {
-        print('###########  didHaveMemoryPressure() in $this\n');
+        print('###########  didHaveMemoryPressure() in $className\n');
       }
       return true;
     }());
@@ -327,7 +328,7 @@ class CounterState<T extends CounterWidget> extends StateX<T> {
     super.didChangeAccessibilityFeatures();
     assert(() {
       if (kDebugMode) {
-        print('###########  didChangeAccessibilityFeatures() in $this\n');
+        print('###########  didChangeAccessibilityFeatures() in $className\n');
       }
       return true;
     }());

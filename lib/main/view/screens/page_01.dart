@@ -1,5 +1,4 @@
 //
-
 import '/src/view.dart';
 
 class Page1 extends CounterWidget {
@@ -9,10 +8,5 @@ class Page1 extends CounterWidget {
 }
 
 class _Page1State extends CounterState<Page1> {
-  @override
-  void initState() {
-    // Supply the next page
-    nextWidget = '2';
-    super.initState();
-  }
+  _Page1State() : super(nextWidget: '2');
 }

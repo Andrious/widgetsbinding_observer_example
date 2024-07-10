@@ -1,5 +1,7 @@
 //
+import '/src/controller.dart';
 
+//
 import '/src/view.dart';
 
 /// The second page displayed in this app.
@@ -10,10 +12,6 @@ class Page3 extends CounterWidget {
 }
 
 class _Page3State extends CounterState<Page3> {
-  @override
-  void initState() {
-    prevWidget = '2';
-    nextWidget = '4';
-    super.initState();
-  }
+  _Page3State()
+      : super(controller: PageController(), prevWidget: '2', nextWidget: '4');
 }
